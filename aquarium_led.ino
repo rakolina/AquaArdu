@@ -4,7 +4,7 @@ int LEDPIN=13;
 int BUTTONPIN=2;
 
 unsigned long FIVEMINUTES=300000; // millis
-unsigned long INTERVAL=5000;
+unsigned long INTERVAL=FIVEMINUTES;
 
 unsigned long currentTime=0;
 unsigned long startTime=0;

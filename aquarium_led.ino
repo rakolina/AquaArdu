@@ -21,7 +21,7 @@ void loop() {
     setTimer();
     motorOff();
   }
-  if(isTimerExpired()) {
+  if(isTimerOn() && isTimerExpired()) {
     resetTimer();
     motorOn();
   }

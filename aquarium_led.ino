@@ -21,14 +21,12 @@ void loop() {
     setTimer();
     motorOff();
   }
-  if(isTimerOn() && isTimerExpired()) {
+  if(isTimerExpired()) {
     resetTimer();
     motorOn();
   }
-  if(isTimerOn()) {
-   if(isQuarterTime() || isHalfTime() || isThreeQuartersTime()) {
-     blinkLed();
-   }
+  if(isQuarterTime() || isHalfTime() || isThreeQuartersTime()) {
+    blinkLed();
   }
 }
 
@@ -39,16 +37,20 @@ boolean isButtonPushed() {
   return (HIGH==digitalRead(BUTTONPIN));
 }
 boolean isTimerExpired() {
-  return (currentTime-startTime>INTERVAL);
+  return (isTimerOn() && currentTime-startTime>INTERVAL);
 }
 boolean isHalfTime() {
   return checkTime(1,2);
 }
 boolean checkTime(unsigned int nominator, unsigned int divisor) {
-  unsigned int lowerLimit=INTERVAL*nominator/divisor;
-  unsigned int upperLimit=lowerLimit+100;
-  unsigned int elapsedTime=currentTime-startTime;
-  return (lowerLimit<elapsedTime && elapsedTime<upperLimit);
+  if(isTimerOn()) {
+    unsigned int lowerLimit=INTERVAL*nominator/divisor;
+    unsigned int upperLimit=lowerLimit+100;
+    unsigned int elapsedTime=currentTime-startTime;
+    return (lowerLimit<elapsedTime && elapsedTime<upperLimit);
+  } else {
+    return false;
+  }
 }
 boolean isQuarterTime() {
   return checkTime(1,4);

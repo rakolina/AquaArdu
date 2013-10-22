@@ -1,62 +1,64 @@
-// Track state of power filter and led button, turn it off with button, automaticallyturn it on after 5 minutes
+const int LEDPIN=13;
+const int BUTTONPIN=2;
 
-int LEDPIN=13;
-int BUTTONPIN=2;
-
-unsigned long FIVEMINUTES=300000; // millis
-unsigned long INTERVAL=FIVEMINUTES;
+const unsigned long FIVEMINUTES=300000; // millis
+const unsigned long TIMERINTERVAL=FIVEMINUTES;
+const unsigned long FLASHINTERVAL=5000;
+const unsigned long FLASHLENGTH=300;
 
 unsigned long currentTime=0;
 unsigned long startTime=0;
+
+enum timer {on,off}; 
+timer t;
 
 void setup() {                
   pinMode(LEDPIN, OUTPUT);  
   pinMode(BUTTONPIN, INPUT);  
   motorOn();  
+  clearTimer();
 }
 
 void loop() {
   currentTime=millis();
   if(isButtonPushed()) {
-    setTimer();
+    startTimer();
     motorOff();
   }
-  if(isTimerExpired()) {
-    resetTimer();
-    motorOn();
-  }
-  if(isQuarterTime() || isHalfTime() || isThreeQuartersTime()) {
-    blinkLed();
+  else if(isTimerOn()) {
+    if(isTimerExpired()) {
+      clearTimer();
+      motorOn();
+   } else {
+      doLed();
+   }
   }
 }
 
-void resetTimer() {
-  startTime=0;
+void doLed() {
+  unsigned long divisor=elapsed() % FLASHINTERVAL;
+  if(0<divisor && divisor<FLASHLENGTH) {
+    ledOn();
+  } else {
+    ledOff();
+  }
+}
+unsigned long elapsed()
+{
+  return (currentTime-startTime);
+}
+void startTimer() {
+  t=on;
+  startTime=millis();
+}
+void clearTimer() {
+  t=off;
 }
 boolean isButtonPushed() {
   return (HIGH==digitalRead(BUTTONPIN));
 }
 boolean isTimerExpired() {
-  return (isTimerOn() && currentTime-startTime>INTERVAL);
-}
-boolean isHalfTime() {
-  return checkTime(1,2);
-}
-boolean checkTime(unsigned int nominator, unsigned int divisor) {
-  if(isTimerOn()) {
-    unsigned int lowerLimit=INTERVAL*nominator/divisor;
-    unsigned int upperLimit=lowerLimit+100;
-    unsigned int elapsedTime=currentTime-startTime;
-    return (lowerLimit<elapsedTime && elapsedTime<upperLimit);
-  } else {
-    return false;
-  }
-}
-boolean isQuarterTime() {
-  return checkTime(1,4);
-}
-boolean isThreeQuartersTime() {
-  return checkTime(3,4);
+  return (isTimerOn() && currentTime-startTime>TIMERINTERVAL);
 }
 void ledOn() {
   digitalWrite(LEDPIN, HIGH);
@@ -72,12 +74,6 @@ void motorOff() {
   ledOff();
   // turn relay off
 }
-void setTimer() {
-  startTime=millis();
-}
-void timerOff() {
-  startTime=0;
-}
 boolean isTimerOn() {
-  return (0<startTime);
+  return (on==t);
 }

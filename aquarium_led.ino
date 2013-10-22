@@ -60,10 +60,14 @@ boolean isTimerExpired() {
   return (elapsed()>TIMERINTERVAL);
 }
 void ledOn() {
-  digitalWrite(LEDPIN, HIGH);
+  if(LOW==LEDPIN) {
+    digitalWrite(LEDPIN, HIGH);
+  }
 }
 void ledOff() {
-  digitalWrite(LEDPIN, LOW);
+  if(HIGH==LEDPIN) {
+    digitalWrite(LEDPIN, LOW);
+  }
 }
 void motorOn() {
   ledOn();

@@ -29,9 +29,9 @@ void loop() {
     if(isTimerExpired()) {
       clearTimer();
       motorOn();
-   } else {
+    } else {
       doLed();
-   }
+    }
   }
 }
 
@@ -57,7 +57,7 @@ boolean isButtonPushed() {
   return (HIGH==digitalRead(BUTTONPIN));
 }
 boolean isTimerExpired() {
-  return (isTimerOn() && elapsed()>TIMERINTERVAL);
+  return (elapsed()>TIMERINTERVAL);
 }
 void ledOn() {
   digitalWrite(LEDPIN, HIGH);

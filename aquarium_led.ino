@@ -43,8 +43,7 @@ void doLed() {
     ledOff();
   }
 }
-unsigned long elapsed()
-{
+unsigned long elapsed() {
   return (currentTime-startTime);
 }
 void startTimer() {

@@ -58,7 +58,7 @@ boolean isButtonPushed() {
   return (HIGH==digitalRead(BUTTONPIN));
 }
 boolean isTimerExpired() {
-  return (isTimerOn() && currentTime-startTime>TIMERINTERVAL);
+  return (isTimerOn() && elapsed()>TIMERINTERVAL);
 }
 void ledOn() {
   digitalWrite(LEDPIN, HIGH);

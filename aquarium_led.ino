@@ -64,11 +64,6 @@ void ledOn() {
 void ledOff() {
   digitalWrite(LEDPIN, LOW);
 }
-void blinkLed() {
-  ledOn();
-  delay(50);
-  ledOff();
-}
 void motorOn() {
   ledOn();
   // turn relay on

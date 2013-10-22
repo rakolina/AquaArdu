@@ -36,7 +36,7 @@ void loop() {
 }
 
 void doLed() {
-  unsigned long divisor=elapsed() % FLASHINTERVAL;
+  unsigned long divisor=elapsed()%FLASHINTERVAL;
   if(0<divisor && divisor<FLASHLENGTH) {
     ledOn();
   } else {

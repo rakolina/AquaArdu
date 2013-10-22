@@ -7,3 +7,5 @@ Use this to control a wall power relay with arduino uno wired to LED momentary b
 
 On button push start timer for 5 minutes (300000 ms). When interval 
 ends, turn relay back on.
+
+Button stays on when relay is on, flashes when relay is off, stays off when relay is off.

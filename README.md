@@ -21,3 +21,6 @@ At every button push 5 minutes is added on, previous duration is thrown out.
 
 Button stays on when relay is on, flashes when relay is off with timer going, stays off
 when relay is permanently off (no timer going).
+
+
+TODO document the temperature sensor functinality with email alarms

@@ -17,7 +17,7 @@ Use this to control a wall power relay with arduino uno wired to a LED momentary
 On button push shut off the smart wall relay (stops filter) and start timer for 5 minutes (300000 ms). 
 When interval ends, turn relay back on.
 
-At every button push 5 minutes is added on, previous duration is thrown out.
+While the timer is going, at every button push 5 minutes is added on, previous duration is thrown out.
 
 Button stays on when relay is on, flashes when relay is off with timer going, stays off
 when relay is permanently off (no timer going).
